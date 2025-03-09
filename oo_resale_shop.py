@@ -8,10 +8,6 @@ class ResaleShop:
     # change computer information
     # check inverntory
     
-#I asked GPT for advice here: instead of using [](list), it suggesed me to use dictionary
-#Because I want to quickly find a piece of information stored and maybe delete it. List is too orderly thus not suitable
-#Dictionary is orderless but suitable for this task
-
     inventory = {} 
     computer_count = {} #track amount of computer for each description
 
