@@ -1,4 +1,11 @@
-from computer import * #import 
+"""
+resale_shop.py
+
+Author: Sophie
+Date: 2025.3
+"""
+
+from computer import Computer
 
 class ResaleShop:
 
@@ -8,63 +15,47 @@ class ResaleShop:
     # change computer information
     # check inverntory
     
-    inventory = {} 
-    computer_count = {} #track amount of computer for each description
+    inventory = [] 
 
     # How will you set up your constructor?
     # Remember: in python, all constructors have the same name (__init__)
+    """
+    Methods:
+    - __init__(): Initializes an empty inventory.
+    - buy(computer: Computer) -> str: 
+    - sell(description: str)
+    - refurbish(description: str, new_os: str)
+    - print_inventory()
+
+    """
 
     def __init__(self):
-        
-        self.inventory = {} 
-        self.computer_count = {} #track amount of computer for each description
-
-    # What methods will you need?
+        self.inventory = [] 
 
     def buy(self, computer: Computer):
-        
-        # Check if the description already exists in the inventory
-        if computer.description in self.inventory:
-            self.computer_count[computer.description] += 1  # Increase count
-        else:
-            self.inventory[computer.description] = computer  # Add a new computer
-            self.computer_count[computer.description] = 1  # Start with 1 unit
+        self.inventory.append(computer) 
         print(f"Added {computer.description} to inventory.")
-    
-    def sell(self, computer: Computer):
-        if computer.description in self.inventory:
-            self.computer_count[computer.description] -= 1  # Decrease count
-            if self.computer_count[computer.description] == 0:
-                del self.inventory[computer.description]  # Remove from inventory if count is 0
-                del self.computer_count[computer.description]
-            print(f"{computer.description} has been sold.")
-        else:
-            print(f"There is no {computer.description} in the inventory.")
+        return computer.description 
+
+    def sell(self, description):
+        for computer in self.inventory:
+            if computer.description == description:
+                self.inventory.remove(computer)
+                print(f"{description} has been sold.")
+                return
+        print(f"There is no {description} in the inventory.")
+
+    def refurbish(self, description, new_os):
+        for computer in self.inventory:
+            if computer.description == description:
+                computer.operating_system = new_os
+                print(f"Refurbished {computer.description}, new OS: {computer.operating_system}")
+                return
+        print(f"Error: No computer found with description '{description}'")
 
     def print_inventory(self):
-        for description, computer in self.inventory.items():
-            print(f"{description}: {self.computer_count[description]} in stock")
-
-    
-    def refurbish(self, computer:Computer, description):
-    # Check if the computer exists in the inventory by description
-        if description in self.inventory:
-            # Access the computer from inventory
-            computer = self.inventory[description]
-
-            # Refurbish the computer based on the year it was made
-            if computer.year_made < 2000:
-                computer.price = 0  # Too old to sell, donation only
-            elif computer.year_made < 2012:
-                computer.price = 250  # Heavily-discounted price on machines 10+ years old
-            elif computer.year_made < 2018:
-                computer.price = 550  # Discounted price on machines 4-to-10 years old
-            else:
-                computer.price = 1000  # Recent stuff
-
-            print(f"Refurbished {computer.description}, new price: ${computer.price}")
-        else:
-            print(f"{description} is not in inventory.")
+        for computer in self.inventory:
+            print(f"{computer.description}: {computer.operating_system}")
 
 def main():
     # Create a resale shop instance
@@ -80,14 +71,14 @@ def main():
 
     # Add the computer to the inventory
     print("Buying computer1...")
-    computer_id = shop.buy(computer1)
+    computer_id = shop.buy(computer1)  # ✅ 现在 `computer_id` 仍然是 description
 
     # Print inventory
     shop.print_inventory()
 
     # Refurbish the computer
     print("\nRefurbishing computer1...")
-    shop.refurbish(computer_id, "MacOS Monterey")
+    shop.refurbish(computer_id, "MacOS Monterey")  # ✅ 仍然传 description
 
     # Print inventory after refurbishing
     shop.print_inventory()

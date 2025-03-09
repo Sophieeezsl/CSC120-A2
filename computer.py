@@ -1,3 +1,11 @@
+"""
+computer.py
+
+Author: Sophie
+Date: 2025.3
+
+"""
+
 class Computer:
 
     # What attributes will it need?
@@ -26,6 +34,14 @@ class Computer:
 
 
     # What methods will you need?
+    
+    """
+    Methods:
+    - __init__()
+    - update_price(new_price: int)
+    - update_OS(new_os: str)
+    - print_computer_info()
+    """
 
     def update_price (self,newPrice:int): # ensuring newPrice is int.
         self.price = newPrice # update the price information stored
